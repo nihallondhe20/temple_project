@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 //const cors = require("cors");
+require("dotenv").config();
 const app = express();
 const { Sequelize } = require("sequelize");
 const stores = require("./models/store");
@@ -13,7 +14,7 @@ const stores = require("./models/store");
 //   useUnifiedTopology: true,
 // });
 
-const sequelize = new Sequelize('postgres://postgres:UyrlEwSRGJ5H1pG15JYz@temple.ce9wdllendlw.ap-south-1.rds.amazonaws.com/postgres', {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: "postgres",
     protocol: "postgres",
     dialectOptions: {
