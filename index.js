@@ -7,12 +7,7 @@ require("dotenv").config();
 const app = express();
 const { Sequelize } = require("sequelize");
 const stores = require("./models/store");
-//const User = require('./modules/Booking'); // Import the User model you defined
-// const app = express();
-// mongoose.connect('postgres://postgres:UyrlEwSRGJ5H1pG15JYz@temple.ce9wdllendlw.ap-south-1.rds.amazonaws.com/postgres', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
+
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: "postgres",
