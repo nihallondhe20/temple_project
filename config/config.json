@@ -1,10 +1,10 @@
 {
 	"development": {
 		"dialect": "postgres",
-		"cryptoSecret": "uoy79a8w9e43bf",
+		"cryptoSecret": "radom_generate",
 		"username": "postgres",
-		"password": "UyrlEwSRGJ5H1pG15JYz",
-		"host": "temple.ce9wdllendlw.ap-south-1.rds.amazonaws.com",
+		"password": "abc",
+		"host": "aws_rds_url",
 		"database": "postgres"
 	}
 }
