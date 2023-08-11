@@ -20,9 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     amount: DataTypes.STRING,
     customer_name: DataTypes.STRING,
     cust_id: DataTypes.STRING,
-    poojari_age: DataTypes.STRING,
-    poojari_id: DataTypes.STRING,
-    poojari_name: DataTypes.STRING
+    poojari_name: DataTypes.STRING,
+    pooja_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'booking_poojs',

@@ -27,14 +27,11 @@ module.exports = {
       cust_id: {
         type: Sequelize.STRING
       },
-      poojari_age: {
-        type: Sequelize.STRING
-      },
-      poojari_id: {
-        type: Sequelize.STRING
-      },
       poojari_name: {
         type: Sequelize.STRING
+      },
+      pooja_id: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

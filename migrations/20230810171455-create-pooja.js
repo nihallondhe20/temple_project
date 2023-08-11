@@ -2,48 +2,33 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('donation_details', {
+    await queryInterface.createTable('poojas', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      donation_type: {
+      name: {
         type: Sequelize.STRING
       },
-      donation_for: {
+      timing: {
         type: Sequelize.STRING
       },
-      remark: {
-        type: Sequelize.STRING
-      },
-      address: {
+      language: {
         type: Sequelize.STRING
       },
       amount: {
         type: Sequelize.STRING
       },
-      city: {
+      pid: {
         type: Sequelize.STRING
       },
-      payment_type: {
-        type: Sequelize.STRING
-      },
-      cheque_no: {
-        type: Sequelize.STRING
-      },
-      adhar_card: {
-        type: Sequelize.STRING
-      },
-      pan_card: {
-        type: Sequelize.STRING
-      },
-      date: {
-        type: Sequelize.STRING
-      },
-      comments: {
-        type: Sequelize.STRING
+      temple_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        onUpdate: "CASCADE",
+				onDelete: "SET NULL",
       },
       createdAt: {
         allowNull: false,
@@ -56,6 +41,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('donation_details');
+    await queryInterface.dropTable('poojas');
   }
 };

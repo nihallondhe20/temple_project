@@ -1,12 +1,10 @@
 const db = require("../models");
 const generateUniqueId = require("generate-unique-id");
 var bodyParser = require('body-parser');
-//const store = require("../models/store");
-const temple_data = require("../models/temple_data")
-const Temple = db.temple_data
-
-const pooja = require("../models/pooja")
-const poojaaa = db.pooja
+const booking_poojs = require("../models/booking_poojs");
+const pooja = require("../models/pooja");
+const Pooja = db.pooja
+const Booking_poojs = db.booking_poojs
 
 module.exports = function (app, sequelize, passport) {
     app.use(function (req, res, next) {
@@ -17,37 +15,21 @@ module.exports = function (app, sequelize, passport) {
         next();
     });
 
-
+  
 
     app.post(
-        "/temple/add",
+        "/pooja/add",
         bodyParser.json(),
-        //  passport.authenticate("user_rule", { session: false }),
+      //  passport.authenticate("user_rule", { session: false }),
         async (req, res) => {
-
-            await Temple.create({
-
-                t_name: req.body.t_name,
-                mobile: req.body.mobile,
-                gmail: req.body.gmail,
-                address: req.body.address,
-                city: req.body.city,
-                found_date: req.body.found_date,
-                diety: req.body.diety,
-                pujari: req.body.pujari,
-                timing_oc: req.body.timing_oc,
-                photos: req.body.photos,
-                instructions: req.body.instructions,
-                comments: req.body.comments,
-                comments: req.body.comments,
-                comments: req.body.comments,
-                fb: req.body.fb,
-                insta: req.body.insta,
-                gallary: req.body.gallary,
-                copyright: req.body.copyright,
-                specific: req.body.specific
-
-
+            console.log(req.body)
+            await Pooja.create({
+                name: req.body.name,
+                timing: req.body.timing,
+                language: req.body.language,
+                amount:req.body.amount,
+                code:req.body.code,
+                temple_id:req.body.temple_id
             })
                 .then((result) => {
                     res.json({ msg: "New category created", data: result });
@@ -61,78 +43,78 @@ module.exports = function (app, sequelize, passport) {
 
 
 
-
-
-
     app.get(
-        "/temple/all",
+        "/pooja/all",
         // passport.authenticate("user_rule", { session: false }),
         async (req, res) => {
-            Temple.findAll({
-                // where: { id: 2},
-                include: [{ model: poojaaa, as: "templepooja" }],
+
+            Pooja.findAll({
+               
+                where: { id: 1},
+                 include: [{ model: Booking_poojs, as: "bookpooja" }],
+                
             })
                 .then((appo) => {
-
-                    res.json({ msg: "all user appointments", appo });
-                })
+                    
+                    res.json ({ msg: "all user appointments", appo });
+                }) 
                 .catch((err) => {
                     console.log(err);
-                    return ({
+                    return({
                         msg: ">> Error while fetching user appointments",
                         err,
                     });
                 });
-
-
-        }
+           
+    
+           }
     );
 
 
     app.post(
-        "/temple/id",
+        "/pooja/id",
         bodyParser.json(),
         // passport.authenticate("user_rule", { session: false }),
         async (req, res) => {
 
-            Temple.findOne({
-                where: { id: req.body.id },
+            Pooja.findOne({
+                 where: { id: req.body.id },
                 // include: [{ model: Notary, as: "notary" }],
             })
                 .then((appo) => {
-
-                    res.json({ msg: "all user appointments", appo });
-                })
+                    
+                    res.json ({ msg: "all user appointments", appo });
+                }) 
                 .catch((err) => {
                     console.log(err);
-                    return ({
+                    return({
                         msg: ">> Error while fetching user appointments",
                         err,
                     });
                 });
-
-
-        }
+           
+    
+           }
     );
 
 
 
     app.post(
-        "/temple/delete",
+        "/pooja/delete",
         bodyParser.json(),
-        //  passport.authenticate("user_rule", { session: false }),
+      //  passport.authenticate("user_rule", { session: false }),
         async (req, res) => {
-            await Temple.findOne({
+            await Pooja.findOne({
                 where: {
                     id: req.body.id,
-                    //     appointmentId: req.body.appointmentId,
+               //     appointmentId: req.body.appointmentId,
                 },
             })
                 .then(async (userdel) => {
                     if (userdel) {
                         await userdel
                             .destroy({
-                                //  include: [{ model: Notary, as: "notary" }],
+                              //  include: [{ model: Notary, as: "notary" }],
                             })
                             .then(() => {
                                 res.json({
@@ -155,17 +137,9 @@ module.exports = function (app, sequelize, passport) {
                         msg: ">> Error while finding appointment document",
                         err,
                     });
-                });
+                }); 
         }
     );
-
-
-
-
-
-
-
-
 
 
 }

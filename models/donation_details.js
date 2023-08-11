@@ -14,8 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   donation_details.init({
-    donation_type: DataTypes.STRING,
-    donation_for: DataTypes.STRING,
+    donation_for: DataTypes.INTEGER,
     remark: DataTypes.STRING,
     address: DataTypes.STRING,
     amount: DataTypes.STRING,

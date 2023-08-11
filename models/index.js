@@ -40,4 +40,46 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.pooja=require("./pooja")(sequelize, Sequelize.DataTypes)
+db.poojaa=require("./pooja")(sequelize, Sequelize.DataTypes)
+db.temple_data=require("./temple_data")(sequelize, Sequelize.DataTypes)
+db.booking_poojs=require("./booking_poojs")(sequelize, Sequelize.DataTypes)
+//db.Pooja_Add=require("./pooja")(sequelize, Sequelize.DataTypes)
+//db.Pooja_Add=require("./pooja")(sequelize, Sequelize.DataTypes)
+db.donation=require("./donation_details")(sequelize, Sequelize.DataTypes)
+db.donation_for=require("./donation_for")(sequelize, Sequelize.DataTypes)
+
+db.pooja.hasMany(db.booking_poojs,{
+  foreignKey:"id",
+   as:"bookpooja"
+})
+
+db.booking_poojs.belongsTo(db.pooja, {
+	foreignKey: "temple_id",
+	as: "poojaa",
+});
+
+
+db.donation_for.hasMany(db.donation,{
+  foreignKey:"donation_for",
+   as:"donatefor"
+})
+
+db.donation.belongsTo(db.donation_for, {
+	foreignKey: "id",
+	as: "donateform",
+});
+
+
+db.temple_data.hasMany(db.poojaa,{
+  foreignKey:"temple_id",
+   as:"templepooja"
+})
+
+db.poojaa.belongsTo(db.temple_data, {
+	foreignKey: "id",
+	as: "poojabytemple",
+});
+
+
 module.exports = db;

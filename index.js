@@ -52,9 +52,12 @@ app.get("/", function (req, res, next) {
 
 require("../v1/routes/user")(app,sequelize)
 require("./routes/store")(app,sequelize)
+require("./routes/add_pooja")(app,sequelize)
+require("./routes/book_pooja")(app,sequelize)
 require("./routes/hall_prop")(app,sequelize)
 require("./routes/donation")(app,sequelize)
 require("./routes/temple")(app,sequelize)
+require("./routes/donation_type")(app,sequelize)
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class donation_form extends Model {
+  class donation_for extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,22 +13,18 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  donation_form.init({
-    fullName: DataTypes.STRING,
-    mobile: DataTypes.STRING,
-    email: DataTypes.STRING,
+  donation_for.init({
+    donation_type: DataTypes.STRING,
+    dona_name: DataTypes.STRING,
+    diaty: DataTypes.STRING,
     address: DataTypes.STRING,
-    amount: DataTypes.STRING,
-    gotra: DataTypes.STRING,
+    organiser_details: DataTypes.STRING,
     payment_type: DataTypes.STRING,
-    cheque_no: DataTypes.STRING,
     bank_name: DataTypes.STRING,
-    branch_name: DataTypes.STRING,
-    date: DataTypes.STRING,
-    transaction_id: DataTypes.STRING
+    branch_name: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'donation_form',
+    modelName: 'donation_for',
   });
-  return donation_form;
+  return donation_for;
 };

@@ -1,11 +1,10 @@
 const db = require("../models");
 const generateUniqueId = require("generate-unique-id");
 var bodyParser = require('body-parser');
-const donation_details = require("../models/donation_details");
-const donation_d = db.donation_details
-
-const donation_form = require("../models/donation_for")
-const donation_direct = db.donation_form
+const donation_for = require("../models/donation_for");
+const Donation_for= db.donation_for
+const donation_details= require("../models/donation_details");
+const Donation_details= db.donation_details
 
 module.exports = function (app, sequelize, passport) {
     app.use(function (req, res, next) {
@@ -18,24 +17,49 @@ module.exports = function (app, sequelize, passport) {
 
   
 
+
+
+    app.get(
+        "/donation_form/all",
+        // passport.authenticate("user_rule", { session: false }),
+        async (req, res) => {
+
+            Donation_for.findAll({
+                // where: { id: 1 },
+                include: [{ model: Donation_details, as: "donatefor" }],
+            })
+                .then((appo) => {
+                    
+                    res.json ({ msg: "all user appointments", appo });
+                }) 
+                .catch((err) => {
+                    console.log(err);
+                    return({
+                        msg: ">> Error while fetching user appointments",
+                        err,
+                    });
+                });
+           
+    
+           }
+    );
+
     app.post(
-        "/donation/add",
+        "/donation_form/add",
         bodyParser.json(),
       //  passport.authenticate("user_rule", { session: false }),
         async (req, res) => {
             console.log(req.body)
-            await donation_d.create({
-                donation_for: req.body.donation_for,
-                address: req.body.user,
+            await Donation_for.create({
+                donation_type: req.body.name,
+                dona_name: req.body.dona_name,
                 remark: req.body.comments,
-                amount:req.body.location,
-                city:req.body.others,
+                diaty:req.body.diaty,
+                organiser_details:req.body.organiser_details,
                 payment_type:req.body.payment_type,
-                cheque_no:req.body.cheque_no,
-                adhar_card:req.body.adhar_card,
-                pan_card:req.body.pan_card,
-                date:req.body.date,
-                comments:req.body.comments,
+                bank_name:req.body.cheque_no,
+                branch_name:req.body.adhar_card,
+                address:req.body.pan_card,
             })
                 .then((result) => {
                     res.json({ msg: "New category created", data: result });
@@ -50,11 +74,11 @@ module.exports = function (app, sequelize, passport) {
 
 
     app.get(
-        "/donation/all",
+        "/donation_form/all",
         // passport.authenticate("user_rule", { session: false }),
         async (req, res) => {
 
-            donation_d.findAll({
+            Donation_for.findAll({
                 // where: { userId: req.agent_id },
                 // include: [{ model: Notary, as: "notary" }],
             })
@@ -76,12 +100,12 @@ module.exports = function (app, sequelize, passport) {
 
 
     app.post(
-        "/donation/id",
+        "/donation_form/id",
         bodyParser.json(),
         // passport.authenticate("user_rule", { session: false }),
         async (req, res) => {
 
-            donation_d.findOne({
+            Donation_for.findOne({
                  where: { id: req.body.id },
                 // include: [{ model: Notary, as: "notary" }],
             })
@@ -104,11 +128,11 @@ module.exports = function (app, sequelize, passport) {
 
 
     app.post(
-        "/donation/delete",
+        "/donation_form/delete",
         bodyParser.json(),
       //  passport.authenticate("user_rule", { session: false }),
         async (req, res) => {
-            await donation_d.findOne({
+            await Donation_for.findOne({
                 where: {
                     id: req.body.id,
                //     appointmentId: req.body.appointmentId,
@@ -147,92 +171,4 @@ module.exports = function (app, sequelize, passport) {
 
 
 
-
-    // app.post(
-    //     "/donation_direct/add",
-    //     bodyParser.json(),
-    //   //  passport.authenticate("user_rule", { session: false }),
-    //     async (req, res) => {
-    //         console.log(req.body)
-    //         await donation_direct.create({
-    //             fullName: req.body.fullName,
-    //             mobile: req.body.mobile,
-    //             email: req.body.email,
-    //             address: req.body.address,
-    //             amount: req.body.amount,
-    //             gotra: req.body.gotra,
-    //             payment_type: req.body.payment_type,
-    //             cheque_no: req.body.cheque_no,
-    //             bank_name: req.body.bank_name,
-    //             branch_name: req.body.branch_name,
-    //             date: req.body.data,
-    //             transaction_id: req.body.transaction_id
-    //         })
-    //             .then((result) => {
-    //                 res.json({ msg: "New category created", data: result });
-    //             })
-    //             .catch((err) => {
-    //                 console.log(err);
-    //                 res.json({ msg: ">> Error while saving data: ", err });
-    //             });
-    //     }
-    // );
-
-
-
-    // app.get(
-    //     "/donation_direct/all",
-    //     // passport.authenticate("user_rule", { session: false }),
-    //     async (req, res) => {
-
-    //         donation_direct.findAll({
-    //             // where: { userId: req.agent_id },
-    //             // include: [{ model: Notary, as: "notary" }],
-    //         })
-    //             .then((appo) => {
-                    
-    //                 res.json ({ msg: "all user appointments", appo });
-    //             }) 
-    //             .catch((err) => {
-    //                 console.log(err);
-    //                 return({
-    //                     msg: ">> Error while fetching user appointments",
-    //                     err,
-    //                 });
-    //             });
-           
-    
-    //        }
-    // );
-
-
-    // app.post(
-    //     "/donation_direct/id",
-    //     bodyParser.json(),
-    //     // passport.authenticate("user_rule", { session: false }),
-    //     async (req, res) => {
-
-    //         donation_direct.findOne({
-    //              where: { id: req.body.id },
-    //             // include: [{ model: Notary, as: "notary" }],
-    //         })
-    //             .then((appo) => {
-                    
-    //                 res.json ({ msg: "all user appointments", appo });
-    //             }) 
-    //             .catch((err) => {
-    //                 console.log(err);
-    //                 return({
-    //                     msg: ">> Error while fetching user appointments",
-    //                     err,
-    //                 });
-    //             });
-           
-    
-    //        }
-    // );
-
-
-
-   
-}
+    }

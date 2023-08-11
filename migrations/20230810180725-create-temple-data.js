@@ -2,47 +2,68 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('donation_forms', {
+    await queryInterface.createTable('temple_data', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      fullName: {
+      t_name: {
         type: Sequelize.STRING
       },
       mobile: {
         type: Sequelize.STRING
       },
-      email: {
+      gmail: {
         type: Sequelize.STRING
       },
       address: {
         type: Sequelize.STRING
       },
-      amount: {
+      city: {
         type: Sequelize.STRING
       },
-      gotra: {
+      found_date: {
         type: Sequelize.STRING
       },
-      payment_type: {
+      diety: {
         type: Sequelize.STRING
       },
-      cheque_no: {
+      pujari: {
         type: Sequelize.STRING
       },
-      bank_name: {
+      timing_oc: {
         type: Sequelize.STRING
       },
-      branch_name: {
+      photos: {
         type: Sequelize.STRING
       },
-      date: {
+      instructions: {
         type: Sequelize.STRING
       },
-      transaction_id: {
+      comments: {
+        type: Sequelize.STRING
+      },
+      comments: {
+        type: Sequelize.STRING
+      },
+      comments: {
+        type: Sequelize.STRING
+      },
+      fb: {
+        type: Sequelize.STRING
+      },
+      insta: {
+        type: Sequelize.STRING
+      },
+      gallary: {
+        type: Sequelize.STRING
+      },
+      copyright: {
+        type: Sequelize.STRING
+      },
+      specific: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -56,6 +77,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('donation_forms');
+    await queryInterface.dropTable('temple_data');
   }
 };

@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     timing: DataTypes.STRING,
     language: DataTypes.STRING,
     amount: DataTypes.STRING,
-    code: DataTypes.STRING
+    pid: DataTypes.STRING,
+    temple_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'pooja',
