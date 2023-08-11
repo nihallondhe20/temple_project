@@ -33,6 +33,9 @@ module.exports = {
       branch_name: {
         type: Sequelize.STRING
       },
+      temple_id: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

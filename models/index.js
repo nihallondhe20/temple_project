@@ -42,6 +42,7 @@ db.Sequelize = Sequelize;
 
 db.pooja=require("./pooja")(sequelize, Sequelize.DataTypes)
 db.poojaa=require("./pooja")(sequelize, Sequelize.DataTypes)
+
 db.temple_data=require("./temple_data")(sequelize, Sequelize.DataTypes)
 db.booking_poojs=require("./booking_poojs")(sequelize, Sequelize.DataTypes)
 //db.Pooja_Add=require("./pooja")(sequelize, Sequelize.DataTypes)
@@ -79,6 +80,19 @@ db.temple_data.hasMany(db.poojaa,{
 db.poojaa.belongsTo(db.temple_data, {
 	foreignKey: "id",
 	as: "poojabytemple",
+});
+
+
+
+
+db.temple_data.hasMany(db.donation_for,{
+  foreignKey:"temple_id",
+   as:"donatetotemple"
+})
+
+db.donation_for.belongsTo(db.temple_data, {
+	foreignKey: "id",
+	as: "templedonation",
 });
 
 

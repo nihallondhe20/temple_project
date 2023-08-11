@@ -60,6 +60,7 @@ module.exports = function (app, sequelize, passport) {
                 bank_name:req.body.cheque_no,
                 branch_name:req.body.adhar_card,
                 address:req.body.pan_card,
+                temple_id:req.body.temple_id
             })
                 .then((result) => {
                     res.json({ msg: "New category created", data: result });

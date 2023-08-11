@@ -4,9 +4,14 @@ var bodyParser = require('body-parser');
 //const store = require("../models/store");
 const temple_data = require("../models/temple_data")
 const Temple = db.temple_data
-
+const path = require("path");
+const multer = require("multer");
+const fs = require("fs")
 const pooja = require("../models/pooja")
 const poojaaa = db.pooja
+
+const donation_for = require("../models/donation_for")
+const donation_fors = db.donation_for
 
 module.exports = function (app, sequelize, passport) {
     app.use(function (req, res, next) {
@@ -19,12 +24,37 @@ module.exports = function (app, sequelize, passport) {
 
 
 
+    const filestrg = multer.diskStorage({  destination:(req,file,cb) => {  cb(null,'./photos') },
+    filename:(req,file,cb) =>{
+        cb(null,file.originalname)
+    },
+    rename: function (fieldname, filename) {
+        return filename.replace(/\W+/g, '-').toLowerCase();
+    }
+      ,
+    limits : { fileSize:100000 },
+   
+  });
+  const upload = multer({storage:filestrg,
+    fileFilter: (req, file, cb) => {
+        if (file.originalname.match(/\.(png|jpg)$/)) {
+          cb(null, true);
+        } else {
+          cb(null, false);
+          console.log('Only .jpg, .png  format allowed!');
+        }
+    }
+
+})
+
+
     app.post(
-        "/temple/add",
+        "/temple/add",upload.single("photos"),
         bodyParser.json(),
         //  passport.authenticate("user_rule", { session: false }),
         async (req, res) => {
-
+            
+            console.log(fs.createReadStream(req.file.path).path)
             await Temple.create({
 
                 t_name: req.body.t_name,
@@ -36,7 +66,7 @@ module.exports = function (app, sequelize, passport) {
                 diety: req.body.diety,
                 pujari: req.body.pujari,
                 timing_oc: req.body.timing_oc,
-                photos: req.body.photos,
+                photos: fs.createReadStream(req.file.path).path,
                 instructions: req.body.instructions,
                 comments: req.body.comments,
                 comments: req.body.comments,
@@ -70,7 +100,8 @@ module.exports = function (app, sequelize, passport) {
         async (req, res) => {
             Temple.findAll({
                 // where: { id: 2},
-                include: [{ model: poojaaa, as: "templepooja" }],
+                include: [{ model: poojaaa, as: "templepooja" },{ model: donation_fors, as: "donatetotemple" }],
+              //  include: [{ model: donation_fors, as: "donatetotemple" }]
             })
                 .then((appo) => {
 

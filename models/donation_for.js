@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     organiser_details: DataTypes.STRING,
     payment_type: DataTypes.STRING,
     bank_name: DataTypes.STRING,
-    branch_name: DataTypes.STRING
+    branch_name: DataTypes.STRING,
+    temple_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'donation_for',
